@@ -17,7 +17,6 @@ public class Cheat {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
         Card a = new Card(Card.Rank.FIVE,Card.Suit.CLUB);
         Card b = new Card(Card.Rank.TWO, Card.Suit.DIAMOND);
 

@@ -14,13 +14,10 @@ public class Deck implements Serializable,Iterable<Card> {
     private ArrayList<Card> cards;
 
     /** Constructor initializes this deck object
-     *  with an array of cards, also creates
-     *  a full deck of 52 cards with no duplicates
-     *  only takes an arrayList holding card objects
+     *  with a full deck of 52 cards with no duplicates
      *
-     * @param cards - an arrayList<Card> object
      */
-    public Deck(ArrayList<Card> cards){
+    public Deck(){
         for (Card.Rank arank : Card.Rank.values()) {
             for (Card.Suit asuit : Card.Suit.values()) {
                 Card acard = new Card(arank, asuit);

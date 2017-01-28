@@ -128,8 +128,12 @@ public class Hand implements Serializable,Iterable<Hand>{
      * @return
      */
     public boolean remove( Hand ahand) {
-        if (!ahand.cards.isEmpty()) {
-            ahand.cards.clear();
+        if (this.cards.containsAll(ahand.cards)){
+            for(Card acard : ahand.cards) {
+                histogram[acard.getRank().ordinal() % 13] [acard.getSuit().ordinal() % 4] -= 1;
+                hValue -= acard.getRank().value;
+                this.remove(acard);
+            }
             return true;
         }
         return false;
@@ -142,7 +146,7 @@ public class Hand implements Serializable,Iterable<Hand>{
      * @return  - a card object (present at given index)
      *          - null if index higher than number of cards
      */
-    public Card remove ( int index) {
+    public Card remove (int index) {
         if (this.cards.size() < index) {
             return null;
         }
