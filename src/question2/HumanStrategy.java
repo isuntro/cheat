@@ -26,7 +26,7 @@ public class HumanStrategy implements Strategy {
     }
 
     /**
-     * @param b     the bid the player has to follow.
+     * @param b     the bid the player has to follow
      * @param h     The players current hand
      * @param cheat true if the Strategy has decided to cheat (by call to cheat())
      * @return a Bid with the cards to pass to the game and the Rank. This will be
