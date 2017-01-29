@@ -46,6 +46,7 @@ public class Card
          *  next Rank of this
          *  rank object
          *
+         *
          * @return  - return next rank of this object
          */
         public Rank getNext() {

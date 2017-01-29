@@ -18,8 +18,9 @@ public class BasicCheat implements CardGame{
     public BasicCheat(int n){
         nosPlayers=n;
         players=new Player[nosPlayers];
-        for(int i=0;i<nosPlayers;i++)
+        for(int i=1;i<nosPlayers;i++)
                 players[i]=(new BasicPlayer(new BasicStrategy(),this));
+        players[0] = new BasicPlayer(new HumanStrategy(),this);
         currentBid=new Bid();
         currentBid.setRank(Card.Rank.TWO);
         currentPlayer=0;
@@ -58,7 +59,7 @@ public class BasicCheat implements CardGame{
                         currentPlayer=i;
                         players[currentPlayer].addHand(discards);
                         System.out.println("Adding cards to player "+
-                                (currentPlayer+1)+players[currentPlayer]);
+                                (currentPlayer+1) +players[currentPlayer]);
                     }
 //If cheat is called, current bid reset to an empty bid with rank two whatever 
 //the outcome
@@ -119,7 +120,7 @@ public class BasicCheat implements CardGame{
                     if(str.equals("Q")||str.equals("q")||str.equals("quit"))
                             finished=true;
                     int w=winner();
-                    // changed from w>0 to w not -1
+                    // changed from w>0 to w not -1 so player 1 can win
                     if(w!=-1){
                             System.out.println("The Winner is Player "+(w+1));
                             finished=true;
@@ -128,14 +129,14 @@ public class BasicCheat implements CardGame{
             }
     }
     public static boolean isCheat(Bid b){
-            for(Card c:b.getHand().cards){
+            for(Card c:b.getHand().getCards()){
                     if(c.getRank()!=b.r)
                             return true;
             }
             return false;
     }
     public static void main(String[] args){
-            BasicCheat cheat=new BasicCheat();
+            BasicCheat cheat=new BasicCheat(5);
             cheat.playGame();
     }
 }

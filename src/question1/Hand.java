@@ -12,9 +12,9 @@ import java.util.Iterator;
 public class Hand implements Serializable,Iterable<Card>{
 
     private static final long serialVersionUID = 102;
-    public ArrayList<Card> cards = new ArrayList<>();
-    int [][] histogram = new int [13][4];
-    int hValue;
+    private ArrayList<Card> cards = new ArrayList<>();
+    private int [] histogram = new int [17];
+    private int hValue;
 
     /** Default constructor
      *  of hand
@@ -32,9 +32,10 @@ public class Hand implements Serializable,Iterable<Card>{
     public Hand(Card [] cards){
         for(int i=0;i<cards.length;i++){
             Card acard = cards[i];
-            this.cards.add(acard);
-            histogram[(acard.getRank().ordinal()) % 13] [(acard.getSuit().ordinal()) % 4] += 1;
+            this.histogram[(acard.getRank().ordinal()) % 13]++;
+            this.histogram[(acard.getSuit().ordinal()+13) % 17]++;
             hValue += acard.getRank().value;
+            this.cards.add(acard);
         }
     }
 
@@ -46,12 +47,21 @@ public class Hand implements Serializable,Iterable<Card>{
      */
     public Hand(Hand ahand){
         for(Card acard : ahand.cards) {
-            histogram[acard.getRank().ordinal() % 13] [acard.getSuit().ordinal() % 4] += 1;
+            histogram[acard.getRank().ordinal() % 13]++;
+            histogram[(acard.getSuit().ordinal()+13) % 17]++;
             hValue += acard.getRank().value;
         }
         this.cards = ahand.cards;
     }
-
+    public ArrayList<Card> getCards(){
+        return this.cards;
+    }
+    public int[] getHistogram(){
+        return this.histogram;
+    }
+    public int gethValue(){
+        return this.hValue;
+    }
     /** Method used to add
      *  a card object to
      *  this hand, it also
@@ -62,8 +72,8 @@ public class Hand implements Serializable,Iterable<Card>{
      * @param acard - a card object
      */
     public void add(Card acard){
-        histogram[acard.getRank().ordinal() % 13] [acard.getSuit().ordinal() % 4] += 1;
-        hValue += acard.getRank().value;
+        histogram[acard.getRank().ordinal() % 13]++;
+        histogram[(acard.getSuit().ordinal()+13) % 17]++;
         this.cards.add(acard);
     }
 
@@ -80,7 +90,8 @@ public class Hand implements Serializable,Iterable<Card>{
      */
     public void add(Collection<Card> cards) {
         for(Card acard : cards){
-            histogram[acard.getRank().ordinal() % 13] [acard.getSuit().ordinal() % 4] += 1;
+            histogram[acard.getRank().ordinal() % 13]++;
+            histogram[(acard.getSuit().ordinal()+13) % 17]++;
             hValue += acard.getRank().value;
         }
         this.cards.addAll(cards);
@@ -96,7 +107,8 @@ public class Hand implements Serializable,Iterable<Card>{
      */
     public void add(Hand ahand) {
         for(Card acard : ahand.cards){
-            histogram[acard.getRank().ordinal() % 13] [acard.getSuit().ordinal() % 4] += 1;
+            histogram[acard.getRank().ordinal() % 13]++;
+            histogram[(acard.getSuit().ordinal()+13) % 17]++;
             hValue += acard.getRank().value;
         }
         this.cards.addAll(ahand.cards);
@@ -114,7 +126,8 @@ public class Hand implements Serializable,Iterable<Card>{
      */
     public boolean remove( Card acard) {
         if (this.cards.contains(acard)) {
-            histogram[acard.getRank().ordinal() % 13] [acard.getSuit().ordinal() % 4] -= 1;
+            histogram[acard.getRank().ordinal() % 13]--;
+            histogram[(acard.getSuit().ordinal()+13) % 17]--;
             hValue -= acard.getRank().value;
             this.cards.remove(acard);
             return true;
@@ -122,15 +135,16 @@ public class Hand implements Serializable,Iterable<Card>{
         else return false;
     }
 
-    /** ASK ABOUT METHOD§
+    /** ASK ABOUT METHOD§   CHECK IF SHOULD BE LIKE THIS
      *
      * @param ahand
      * @return
      */
     public boolean remove( Hand ahand) {
-        if (this.cards.containsAll(ahand.cards)){
-            for(Card acard : ahand.cards) {
-                histogram[acard.getRank().ordinal() % 13] [acard.getSuit().ordinal() % 4] -= 1;
+        if (this.cards.containsAll(ahand.getCards())){
+            for(Card acard : ahand.getCards()) {
+                histogram[acard.getRank().ordinal() % 13]--;
+                histogram[(acard.getSuit().ordinal()+13) % 17]--;
                 hValue -= acard.getRank().value;
                 this.remove(acard);
             }
@@ -151,7 +165,8 @@ public class Hand implements Serializable,Iterable<Card>{
             return null;
         }
         Card acard = this.cards.get(index);
-        histogram[acard.getRank().ordinal() % 13] [acard.getSuit().ordinal() % 4] -= 1;
+        histogram[acard.getRank().ordinal() % 13]--;
+        histogram[(acard.getSuit().ordinal()+13) % 17]--;
         hValue -= acard.getRank().value;
         this.cards.remove(index);
         return acard;

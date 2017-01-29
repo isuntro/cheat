@@ -8,28 +8,27 @@ import java.util.*;
  * Created by tiberiusimionvoicu on 26/01/2017.
  */
 class HandTest {
+
     @Test
+
     void test() {
-        Card [] cards = new Card[5];
-        cards[0] = (new Card(Card.Rank.TWO,Card.Suit.SPADE));
-        cards[1] = (new Card(Card.Rank.QUEEN,Card.Suit.SPADE));
-        cards[2] = (new Card(Card.Rank.KING,Card.Suit.SPADE));
-        cards[3] = (new Card(Card.Rank.JACK,Card.Suit.SPADE));
-        cards[4] = (new Card(Card.Rank.ACE,Card.Suit.SPADE));
+        Card [] cards = new Card[4];
+        cards[0] = (new Card(Card.Rank.ACE,Card.Suit.CLUB));
+        cards[1] = (new Card(Card.Rank.ACE,Card.Suit.CLUB));
+        cards[2] = (new Card(Card.Rank.ACE,Card.Suit.CLUB));
+        cards[3] = (new Card(Card.Rank.ACE,Card.Suit.CLUB));
         Hand ahand = new Hand(cards);
         System.out.println(ahand.isStraight());
-        System.out.println(ahand.histogram.toString());
-        for (int i=0;i < ahand.histogram.length;i++) {
-            for(int j=0; j < 4; j++) {
-                System.out.print(ahand.histogram[i][j]);
-            }
-            System.out.println();
-
+        System.out.println(ahand.getHistogram().toString());
+        for (int i=0;i < ahand.getHistogram().length;i++) {
+                System.out.println(ahand.getHistogram()[i]);
         }
-        System.out.println(ahand.hValue);
+        System.out.println(ahand.gethValue());
         System.out.println(ahand);
+        System.out.println(ahand.isStraight());
 
     }
+
     @Test
     void addCard() {
 

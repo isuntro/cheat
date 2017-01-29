@@ -8,7 +8,7 @@ public class Bid {
     Card.Rank r;
     public Bid(){
         h=new Hand();
-        r=Card.Rank.ACE;
+            r=Card.Rank.TWO;
     }
     public Bid(Hand hand,Card.Rank bidRank){
         h=hand;
@@ -18,10 +18,10 @@ public class Bid {
     public void setRank(Card.Rank rank){ r=rank;}
 		
     public Hand getHand(){ return h;}
-    public int getCount(){ return h.cards.size();}
+    public int getCount(){ return h.getCards().size();}
     public Card.Rank getRank(){ return r;}
     public String toString(){
-			return h.cards.size()+" x "+r;
+			return h.getCards().size()+" x "+r;
 		}
 		
 }	

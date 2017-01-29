@@ -11,13 +11,14 @@ import java.util.Random;
 public class Deck implements Serializable,Iterable<Card> {
 
     private static final long serialVersionUID = 101;
-    private ArrayList<Card> cards = new ArrayList<>();
+    private ArrayList<Card> cards;
 
     /** Constructor initializes this deck object
      *  with a full deck of 52 cards with no duplicates
      *
      */
     public Deck(){
+        cards = new ArrayList<Card>();
         for (Card.Rank arank : Card.Rank.values()) {
             for (Card.Suit asuit : Card.Suit.values()) {
                 Card acard = new Card(arank, asuit);
@@ -120,23 +121,8 @@ public class Deck implements Serializable,Iterable<Card> {
          */
         @Override
         public Card next() {
-            if((index+2) == cards.size()) {
-                flag = false;
-                return (cards.get(index));
-            }
-            if(flag){
-                if(!(index % 2 == 0)) {
-                    index++;
-                }
-                return (cards.get(index++));
-            }
-            if((index % 2 == 0)) {
-                index--;
-            }
-            if ((index-1) < 0 )
-                index = cards.size();
-            return (cards.get(index--));
 
+            return null;
         }
     }
 

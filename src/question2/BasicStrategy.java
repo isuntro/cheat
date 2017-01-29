@@ -39,7 +39,7 @@ public class BasicStrategy implements Strategy {
         Hand handBid = new Hand();
         if(cheat) {
             Random rad = new Random();
-            Card acard = h.remove(rad.nextInt(h.cards.size()));
+            Card acard = h.remove(rad.nextInt(h.getCards().size()));
             handBid.add(acard);
             playerBid.setHand(handBid);
             playerBid.setRank(b.getRank());
@@ -48,7 +48,7 @@ public class BasicStrategy implements Strategy {
         Card.Rank rankBid = b.getRank();
         if(h.countRank(b.getRank()) < h.countRank(b.getRank().getNext()))
             rankBid = b.getRank().getNext();
-        for( Card acard : h.cards) {
+        for( Card acard : h.getCards()) {
             if( acard.getRank() == rankBid) {
                 handBid.add(acard);
             }
@@ -69,7 +69,7 @@ public class BasicStrategy implements Strategy {
     public boolean callCheat(Hand h, Bid b) {
         // if this player holds 4 cards of last bids rank
         // then return true
-        if (h.countRank(b.getRank()) == 4)
+        if (h.countRank(b.getRank())+b.getCount() > 4)
             return true;
         return false;
     }
