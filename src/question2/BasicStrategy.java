@@ -42,7 +42,7 @@ public class BasicStrategy implements Strategy {
             Card acard = h.remove(rad.nextInt(h.cards.size()));
             handBid.add(acard);
             playerBid.setHand(handBid);
-            playerBid.setRank(acard.getRank());
+            playerBid.setRank(b.getRank());
             return playerBid;
         }
         Card.Rank rankBid = b.getRank();

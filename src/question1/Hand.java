@@ -9,7 +9,7 @@ import java.util.Iterator;
 /**
  * Created by tiberiusimionvoicu on 19/01/2017.
  */
-public class Hand implements Serializable,Iterable<Hand>{
+public class Hand implements Serializable,Iterable<Card>{
 
     private static final long serialVersionUID = 102;
     public ArrayList<Card> cards = new ArrayList<>();
@@ -271,12 +271,12 @@ public class Hand implements Serializable,Iterable<Hand>{
         }
         return true;
     }
-    /**
+    /** TO DO DEFAULT ITERATOR THAT TRANSVERSES LIST IN ORDER THEY WHERE ADDED
      *
      * @return
      */
     @Override
-    public Iterator<Hand> iterator() {
+    public Iterator<Card> iterator() {
         return null;
     }
 }

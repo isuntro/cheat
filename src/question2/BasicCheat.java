@@ -119,7 +119,8 @@ public class BasicCheat implements CardGame{
                     if(str.equals("Q")||str.equals("q")||str.equals("quit"))
                             finished=true;
                     int w=winner();
-                    if(w>0){
+                    // changed from w>0 to w not -1
+                    if(w!=-1){
                             System.out.println("The Winner is Player "+(w+1));
                             finished=true;
                     }

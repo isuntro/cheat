@@ -35,6 +35,7 @@ public class HumanStrategy implements Strategy {
     @Override
     public Bid chooseBid(Bid b, Hand h, boolean cheat) {
         if(cheat){
+            
 
         }
         return null;

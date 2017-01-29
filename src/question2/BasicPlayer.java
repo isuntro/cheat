@@ -7,11 +7,11 @@ import question1.Hand;
  * Created by tiberiusimionvoicu on 27/01/2017.
  */
 public class BasicPlayer implements Player {
-    Hand pHand;
-    Strategy pStrategy;
+    Hand pHand = new Hand();
+    Strategy pStrategy = new BasicStrategy();
     CardGame game;
 
-    public BasicPlayer() {
+    public BasicPlayer(Strategy astrategy, CardGame agame) {
     }
 
     /**

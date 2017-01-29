@@ -11,7 +11,7 @@ import java.util.Random;
 public class Deck implements Serializable,Iterable<Card> {
 
     private static final long serialVersionUID = 101;
-    private ArrayList<Card> cards;
+    private ArrayList<Card> cards = new ArrayList<>();
 
     /** Constructor initializes this deck object
      *  with a full deck of 52 cards with no duplicates
@@ -71,8 +71,8 @@ public class Deck implements Serializable,Iterable<Card> {
      * @return - top card in the deck
      */
     public Card deal(){
-        Card topCard = cards.get(cards.size());
-        cards.remove(cards.size());
+        Card topCard = cards.get(0);
+        cards.remove(0);
         return topCard;
     }
 
@@ -140,13 +140,31 @@ public class Deck implements Serializable,Iterable<Card> {
         }
     }
 
-    /**         TO DO DEFAULT ITERATOR THAT TRANSVERSES LIST IN ORDER THEY WHERE ADDED
+    /**
      *
      * @return
      */
     @Override
     public Iterator<Card> iterator() {
-        return new OddEvenIterator(this.cards);
+        Iterator<Card> deflt = new Iterator<Card>() {
+            private int index = 0;
+
+            @Override
+            public boolean hasNext() {
+                return (index != cards.size());
+            }
+
+            @Override
+            public Card next() {
+                return cards.get(index++);
+            }
+            @Override
+            public void remove() {
+                 cards.remove(index);
+            }
+
+        };
+        return deflt;
     }
 
 }
