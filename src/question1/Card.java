@@ -12,8 +12,7 @@ import java.util.Comparator;
  *
  * @author tiberiusimionvoicu
  */
-public class Card
-        implements Serializable,Comparable<Card> {
+public class Card implements Serializable,Comparable<Card> {
     private static final long serialVersionUID = 102;
 
     /**

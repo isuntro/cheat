@@ -18,9 +18,9 @@ public class BasicCheat implements CardGame{
     public BasicCheat(int n){
         nosPlayers=n;
         players=new Player[nosPlayers];
-        for(int i=1;i<nosPlayers;i++)
+        for(int i=0;i<nosPlayers;i++)
                 players[i]=(new BasicPlayer(new BasicStrategy(),this));
-        players[0] = new BasicPlayer(new HumanStrategy(),this);
+        //players[0] = new BasicPlayer(new HumanStrategy(),this);
         currentBid=new Bid();
         currentBid.setRank(Card.Rank.TWO);
         currentPlayer=0;

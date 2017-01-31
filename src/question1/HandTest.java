@@ -26,6 +26,7 @@ class HandTest {
         System.out.println(ahand.gethValue());
         System.out.println(ahand);
         System.out.println(ahand.isStraight());
+        System.out.println();
 
     }
 

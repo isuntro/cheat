@@ -8,7 +8,11 @@ public class Bid {
     Card.Rank r;
     public Bid(){
         h=new Hand();
-            r=Card.Rank.TWO;
+        // changed from ace to two
+        // as stated in specification
+        // otherwise after someone calls cheat
+        // new bid will be ACE
+        r=Card.Rank.TWO;
     }
     public Bid(Hand hand,Card.Rank bidRank){
         h=hand;

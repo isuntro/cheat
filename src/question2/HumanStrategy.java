@@ -23,7 +23,9 @@ public class HumanStrategy implements Strategy {
         Boolean cheat = false;
         System.out.println("Your current hand is : \n" + h);
         System.out.println("Last players bid is : \n" + b);
-        System.out.println("Would you like to cheat ? (Type yes or no)");
+        System.out.println("Would you like to cheat ? If you dont have any " +
+                "cards to play you will have to cheat " +
+                "(Type yes or no)");
         cheat = yesno(h,b);
         if ( h.countRank(b.getRank()) == 0
                 && h.countRank(b.getRank().getNext()) == 0){
@@ -51,12 +53,14 @@ public class HumanStrategy implements Strategy {
             System.out.println("Your hand is : \n"+h);
             System.out.println("Type 1 - " + h.getCards().size() + " to chose a card");
             choice = scan.nextInt();
+
+
             /*  Choice is valid only if its a positive number
                 less than number of cards in hand
                 and rank is either the same with
                 last players bid or next rank
              */
-            if (choice > 0 && choice < h.getCards().size()) {
+            if (choice > 0 && choice < h.getCards().size() && chcount < 5) {
 
                 //If not cheating rank is either the same rank with
                 //last players bid or next rank

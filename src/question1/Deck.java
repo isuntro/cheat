@@ -1,5 +1,8 @@
 package question1;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -11,8 +14,7 @@ import java.util.Random;
 public class Deck implements Serializable,Iterable<Card> {
 
     private static final long serialVersionUID = 101;
-    private ArrayList<Card> cards;
-
+    protected ArrayList<Card> cards;
     /** Constructor initializes this deck object
      *  with a full deck of 52 cards with no duplicates
      *
@@ -95,13 +97,11 @@ public class Deck implements Serializable,Iterable<Card> {
     /**
      *
      */
-    protected static class OddEvenIterator implements Iterator<Card> {
-        private ArrayList<Card> cards;
-        private static int index = 0;
-        private static boolean flag = true;
+    private class OddEvenIterator implements Iterator<Card> {
+        private int index = 0;
+        private boolean flag = false;
 
-        public OddEvenIterator(ArrayList<Card> cards) {
-            this.cards = cards;
+        public OddEvenIterator() {
         }
 
         /** Function that checks whether any cards
@@ -112,7 +112,7 @@ public class Deck implements Serializable,Iterable<Card> {
          */
         @Override
         public boolean hasNext() {
-            return !(cards.size() == index);
+            return (cards.size() != index);
         }
 
         /**
@@ -121,8 +121,22 @@ public class Deck implements Serializable,Iterable<Card> {
          */
         @Override
         public Card next() {
-
-            return null;
+            Card acard = cards.get(index);
+            // get last even, set index to cards.size
+            // so hasnext will be false and return
+            if(index == cards.size()-1){
+                index = cards.size();
+                return cards.get(cards.size()-1);
+            }
+            index+=2;
+            // if last card is reached
+            // go back to beginning starting from 1
+            // to get evens
+            if(cards.size() == index) {
+                index = 1;
+                flag = true;
+            }
+            return acard;
         }
     }
 
@@ -151,6 +165,18 @@ public class Deck implements Serializable,Iterable<Card> {
 
         };
         return deflt;
+    }
+    public Iterator<Card> oddeven() {
+        return new OddEvenIterator();
+    }
+    private void writeObject(ObjectOutputStream out) throws IOException{
+        Iterator<Card> it = oddeven();
+        ArrayList<Card> saved = new ArrayList<>();
+        while(it.hasNext()){
+            Card acard = it.next();
+            saved.add(acard);
+        }
+        out.writeObject(saved);
     }
 
 }

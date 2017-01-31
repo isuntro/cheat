@@ -7,11 +7,12 @@ import question1.Hand;
  * Created by tiberiusimionvoicu on 27/01/2017.
  */
 public class BasicPlayer implements Player {
-    private Hand pHand = new Hand();
+    private Hand pHand;
     private Strategy pStrategy;
     private CardGame game;
 
     public BasicPlayer(Strategy astrategy, CardGame agame) {
+        this.pHand = new Hand();
         this.pStrategy = astrategy;
         this.game = agame;
     }
@@ -41,7 +42,7 @@ public class BasicPlayer implements Player {
      */
     @Override
     public int cardsLeft() {
-        return this.pHand.getCards().size();
+        return this.pHand.size();
     }
 
     /**
