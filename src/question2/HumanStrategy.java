@@ -59,8 +59,9 @@ public class HumanStrategy implements Strategy {
                 less than number of cards in hand
                 and rank is either the same with
                 last players bid or next rank
+                player also is not allowed to play more than 4 cards
              */
-            if (choice > 0 && choice < h.getCards().size() && chcount < 5) {
+            if (choice > 0 && choice < h.getCards().size() && chcount < 4) {
 
                 //If not cheating rank is either the same rank with
                 //last players bid or next rank

@@ -133,8 +133,8 @@ public class Card implements Serializable,Comparable<Card> {
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder();
-        str.append("Rank : ").append(this.rank).append(" ");
-        str.append("Suit : ").append(this.suit).append("\n");
+        str.append(this.rank).append(" | ");
+        str.append(this.suit).append("\n");
         return str.toString();
     }
 
@@ -228,5 +228,9 @@ public class Card implements Serializable,Comparable<Card> {
         else if (this.getRank().ordinal() == acard.getRank().ordinal())
             return this.getSuit().compareTo(acard.getSuit());
         return 1;
+    }
+
+    public static void main(String[] args) {
+
     }
 }

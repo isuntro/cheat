@@ -8,7 +8,7 @@ import java.util.*;
  * Created by tiberiusimionvoicu on 26/01/2017.
  */
 class HandTest {
-
+/*
     @Test
 
     void test() {
@@ -20,7 +20,7 @@ class HandTest {
         Hand ahand = new Hand(cards);
         System.out.println(ahand.isStraight());
         System.out.println(ahand.getHistogram().toString());
-        for (int i=0;i < ahand.getHistogram().length;i++) {
+        for (int i=0;i < ahand..length;i++) {
                 System.out.println(ahand.getHistogram()[i]);
         }
         System.out.println(ahand.gethValue());
@@ -29,6 +29,7 @@ class HandTest {
         System.out.println();
 
     }
+    */
 
     @Test
     void addCard() {

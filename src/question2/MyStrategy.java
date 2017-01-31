@@ -22,11 +22,13 @@ public class MyStrategy implements Strategy {
 
     @Override
     public Bid chooseBid(Bid b, Hand h, boolean cheat) {
+
         return null;
     }
 
     @Override
     public boolean callCheat(Hand h, Bid b) {
+
         return false;
     }
 }

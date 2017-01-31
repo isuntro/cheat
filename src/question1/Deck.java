@@ -20,7 +20,7 @@ public class Deck implements Serializable,Iterable<Card> {
      *
      */
     public Deck(){
-        cards = new ArrayList<Card>();
+        cards = new ArrayList<>();
         for (Card.Rank arank : Card.Rank.values()) {
             for (Card.Suit asuit : Card.Suit.values()) {
                 Card acard = new Card(arank, asuit);
@@ -177,6 +177,9 @@ public class Deck implements Serializable,Iterable<Card> {
             saved.add(acard);
         }
         out.writeObject(saved);
+    }
+    public static void main(String[] args) {
+
     }
 
 }

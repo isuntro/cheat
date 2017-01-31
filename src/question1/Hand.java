@@ -73,8 +73,13 @@ public class Hand implements Serializable,Iterable<Card> {
      *
      * @return int[] - this histogram
      */
-    public int[] getHistogram() {
-        return this.histogram;
+    public String getHistogram() {
+        String output ="";
+        for(int i : this.histogram){
+            output += Integer.toString(i);
+            output += "\n";
+        }
+        return output;
     }
 
     /**
@@ -176,7 +181,7 @@ public class Hand implements Serializable,Iterable<Card> {
                 histogram[acard.getRank().ordinal() % 13]--;
                 histogram[(acard.getSuit().ordinal() + 13) % 17]--;
                 hValue -= acard.getRank().value;
-                this.remove(acard);
+                this.cards.remove(acard);
             }
             return true;
         }
@@ -233,7 +238,7 @@ public class Hand implements Serializable,Iterable<Card> {
      * of cards of given Suit;
      */
     public int countSuit(Card.Suit asuit) {
-        int count = getHistogram()[asuit.ordinal()+13];
+        int count = this.histogram[asuit.ordinal()+13];
         return count;
     }
 
@@ -246,7 +251,7 @@ public class Hand implements Serializable,Iterable<Card> {
      * cards of given Rank
      */
     public int countRank(Card.Rank arank) {
-        int count = getHistogram()[arank.ordinal()];
+        int count = this.histogram[arank.ordinal()];
         return count;
     }
 
@@ -347,6 +352,12 @@ public class Hand implements Serializable,Iterable<Card> {
         System.out.println("Testing sort ascending: \n" + testHand);
         testHand.sortDescending();
         System.out.println("Testing sort descending: \n" + testHand);
+        System.out.println(testHand.getHistogram());
+        Hand test = new Hand();
+        test.add(cards[1]);
+        test.add(cards[0]);
+        testHand.remove(test);
+        System.out.println(testHand.getHistogram());
 
 
 

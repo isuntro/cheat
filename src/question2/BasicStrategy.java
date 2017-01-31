@@ -31,32 +31,36 @@ public class BasicStrategy implements Strategy {
      * @param h     The players current hand
      * @param cheat true if the Strategy has decided to cheat (by call to cheat())
      * @return a Bid with the cards to pass to the game and the Rank. This will be
-     * different to the rank of thecards if the player is cheating!
+     * different to the rank of the cards if the player is cheating!
      */
     @Override
     public Bid chooseBid(Bid b, Hand h, boolean cheat) {
         Bid playerBid = new Bid();
         Hand handBid = new Hand();
-        if(cheat) {
+        if (cheat) {
             Random rad = new Random();
-            Card acard = h.remove(rad.nextInt(h.getCards().size()));
+            Card acard = h.remove(rad.nextInt(h.size()));
             handBid.add(acard);
             playerBid.setHand(handBid);
+            //randomize Rank called when cheating
+            if (rad.nextInt(10) > 5) {
+                playerBid.setRank(b.getRank().getNext());
+                return playerBid;
+            }
             playerBid.setRank(b.getRank());
             return playerBid;
         }
         Card.Rank rankBid = b.getRank();
-        if(h.countRank(b.getRank()) < h.countRank(b.getRank().getNext()))
+        if (h.countRank(b.getRank()) == 0) {
             rankBid = b.getRank().getNext();
-        for( Card acard : h.getCards()) {
-            if( acard.getRank() == rankBid) {
+        }
+        for (Card acard : h.getCards()) {
+            if (acard.getRank() == rankBid) {
                 handBid.add(acard);
             }
         }
         h.remove(handBid);
-        playerBid.setHand(handBid);
-        playerBid.setRank(rankBid);
-
+        playerBid = new Bid(handBid, rankBid);
         return playerBid;
     }
 
