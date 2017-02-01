@@ -10,7 +10,11 @@ import question1.*;
 public class ThinkerStrategy implements Strategy {
     // Hand containing all the cards
     // that this player has seen
-    private static Hand discards = new Hand();
+    // it's faulty as the longer the game progresses
+    // it believes it knows more cards than it actually should
+    // as they can't be taken out of discards when a player picks them
+    private Hand discards = new Hand();
+
 
     @Override
     public boolean cheat(Bid b, Hand h) {
@@ -40,14 +44,14 @@ public class ThinkerStrategy implements Strategy {
                     chance = rad.nextInt(index);
                     Card acard = h.getCards().get((int)chance);
                     chance = Math.random();
-                    if (acard.getRank().ordinal() >= 8 && chance > 0.5
-                            && acard.getRank() != b.getRank()
-                            && acard.getRank() != b.getRank().getNext()) {
+                    if (acard.getRank().ordinal() >= 5 && chance > 0.6
+                            && !acard.getRank().equals(b.getRank())
+                            && !acard.getRank().equals(b.getRank().getNext())) {
                         handBid.add(acard);
                     }
-                    else if(acard.getRank().ordinal() < 8 && chance < 0.2
-                            && acard.getRank() != b.getRank()
-                            && acard.getRank() != b.getRank().getNext()){
+                    else if(acard.getRank().ordinal() < 5 && chance < 0.2
+                            && !acard.getRank().equals(b.getRank())
+                            && !acard.getRank().equals(b.getRank().getNext())){
                         handBid.add(acard);
                     }
             }
@@ -59,9 +63,6 @@ public class ThinkerStrategy implements Strategy {
             if(chance >= 5)
                 rankBid = b.getRank().getNext();
             discards.add(handBid);
-            if(handBid.size() == 0){
-                System.out.println("EMPTY HAND ");
-            }
             System.out.println("CHEATING !!!!!!!");
             return new Bid (handBid, rankBid);
         }
@@ -72,13 +73,13 @@ public class ThinkerStrategy implements Strategy {
         }
         int playNo=h.countRank(rankBid);  // playNo = max number of cards
         chance = rad.nextInt(10); // chance of not playing all cards
-        if(chance < 2){
+        if(chance < 2 ){
             playNo = rad.nextInt(h.countRank(rankBid))+1; // playNo = random number between 1 and max
         }
         int count = 0;
         // check logic
         for (Card acard : h.getCards()) {
-            if (acard.getRank() == rankBid) {
+            if (acard.getRank().equals(rankBid)) {
                 handBid.add(acard);
                 count++;
             }
@@ -88,9 +89,6 @@ public class ThinkerStrategy implements Strategy {
         }
         h.remove(handBid);
         discards.add(handBid);
-        if(handBid.size() == 0){
-            System.out.println("EMPTY HAND ");
-        }
         System.out.println("NOT CHEATING !!!!");
         return new Bid (handBid,rankBid);
     }
@@ -102,16 +100,18 @@ public class ThinkerStrategy implements Strategy {
                 +discards.countRank(b.getRank());
         double p;
         double chance = Math.random();
-        if (nrRank == 4){
-            p = 0.25;
+        if (discards.countRank(b.getRank()) == 4) {
+            p = 0.40;
         }
-        else if(nrRank == 3){
+        else if(discards.countRank(b.getRank()) == 3) {
+            p = 0.30;
+        }
+        else if(discards.countRank(b.getRank()) == 2) {
             p = 0.20;
-        }
-        else if(nrRank == 2){
-            p = 0.15;
-        }else p = 0.1;
-        if ( chance < 0.05){
+        }else p = 0.15;
+        // small probability it wont call cheat
+        // to try and avoid a deadlock
+        if ( chance < 0.05) {
             return false;
         }
         if(nrRank > 4 || chance < p)

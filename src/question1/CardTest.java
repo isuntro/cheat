@@ -17,13 +17,17 @@ class CardTest {
                 cards.add(acard);
             }
         }
+
         Collections.shuffle(cards);
+        System.out.println("Printing shuffled cards: \n"+cards);
         Card.CompareDescending compdesc = new Card.CompareDescending();
         Card.CompareSuit compsuit = new Card.CompareSuit();
-        //cards.sort(compdesc);
+        cards.sort(compdesc);
+        System.out.println("Printing cards: sorted descending \n"+cards);
         cards.sort(compsuit);
-        //Collections.sort(cards);
-        System.out.println(cards.toString());
+        System.out.println("Printing cards: sorted by suit \n"+cards);
+        Collections.sort(cards);
+        System.out.println("Printing cards: sorted ascending \n"+cards);
 
 
     }

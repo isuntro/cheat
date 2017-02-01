@@ -10,7 +10,7 @@ public class BasicCheat implements CardGame{
     private int currentPlayer;
     private Hand discards;
     private Bid currentBid;
-    
+    public CardGame game;
 
     public BasicCheat(){
         this(MINPLAYERS);
@@ -19,10 +19,10 @@ public class BasicCheat implements CardGame{
         nosPlayers=n;
         players=new Player[nosPlayers];
         for(int i=0;i<nosPlayers;i++)
-                players[i]=(new BasicPlayer(new ThinkerStrategy(),this));
-        players[0] = new BasicPlayer(StrategyFactory.getStrategy("human"),this);
-        players[2] = new BasicPlayer(StrategyFactory.getStrategy("thinker"),this);
-        players[3] = new BasicPlayer(StrategyFactory.getStrategy("thinker"),this);
+                players[i]=(new BasicPlayer(StrategyFactory.getStrategy("my"),this));
+        //players[0] = new BasicPlayer(StrategyFactory.getStrategy("human"),this);
+        //players[2] = new BasicPlayer(StrategyFactory.getStrategy("thinker"),this);
+        //players[3] = new BasicPlayer(StrategyFactory.getStrategy("basic"),this);
         currentBid=new Bid();
         currentBid.setRank(Card.Rank.TWO);
         currentPlayer=0;
@@ -47,7 +47,7 @@ public class BasicCheat implements CardGame{
                 cheat=players[i].callCheat(currentBid);
                 if(cheat){
                     System.out.println("Player called cheat by Player "+(i+1));
-                    if(isCheat(currentBid)){	
+                    if(isCheat(currentBid)){
 //CHEAT CALLED CORRECTLY
 //Give the discard pile of cards to currentPlayer who then has to play again                      
                         players[currentPlayer].addHand(discards);
@@ -139,8 +139,29 @@ public class BasicCheat implements CardGame{
             }
             return false;
     }
+
+    /** Method implemented to be used in my strategy
+     *
+     *
+     * @return - array of players in this game
+     */
+    public Player[] getPlayers(){
+        return this.players;
+    }
+
+    /** Method implemented to be used in my strategy
+     *
+     * @return - index in array of this player
+     */
+    public int getCurrentPlayer(){
+        return this.currentPlayer;
+    }
+    public Hand getDiscards(){
+        return this.discards;
+    }
     public static void main(String[] args){
             BasicCheat cheat=new BasicCheat();
             cheat.playGame();
     }
+
 }

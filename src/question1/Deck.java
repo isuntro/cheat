@@ -1,9 +1,6 @@
 package question1;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
@@ -178,7 +175,28 @@ public class Deck implements Serializable,Iterable<Card> {
         }
         out.writeObject(saved);
     }
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        Deck deck = new Deck();
+        deck.shuffle();
+        System.out.println(deck);
+        /*
+        String path ="";
+        try {
+            FileOutputStream fis = new FileOutputStream(path);
+            ObjectOutputStream out = new ObjectOutputStream(fis);
+            out.writeObject(deck);
+            out.flush();
+            System.out.println("Done!");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+        }
+        ObjectInputStream oin = new ObjectInputStream(new FileInputStream(path));
+        Deck savedeck = (Deck)oin.readObject();
+        System.out.println(deck);
+        System.out.println("Loaded object \n" + savedeck);
+        */
 
     }
 
