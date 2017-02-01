@@ -20,8 +20,8 @@ public class BasicCheat implements CardGame{
         players=new Player[nosPlayers];
         for(int i=0;i<nosPlayers;i++)
                 players[i]=(new BasicPlayer(StrategyFactory.getStrategy("my"),this));
-        //players[0] = new BasicPlayer(StrategyFactory.getStrategy("human"),this);
-        //players[2] = new BasicPlayer(StrategyFactory.getStrategy("thinker"),this);
+        players[0] = new BasicPlayer(StrategyFactory.getStrategy("basic"),this);
+        players[1] = new BasicPlayer(StrategyFactory.getStrategy("thinker"),this);
         //players[3] = new BasicPlayer(StrategyFactory.getStrategy("basic"),this);
         currentBid=new Bid();
         currentBid.setRank(Card.Rank.TWO);

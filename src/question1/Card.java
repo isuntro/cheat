@@ -108,6 +108,7 @@ public class Card implements Serializable,Comparable<Card> {
      */
     public static int difference (Card first, Card second){
         int difference = first.rank.ordinal() - second.rank.ordinal();
+        if(difference < 0 ){ difference = difference*-1; }
         return difference;
     }
 

@@ -11,7 +11,7 @@ import java.util.Random;
 public class Deck implements Serializable,Iterable<Card> {
 
     private static final long serialVersionUID = 101;
-    protected ArrayList<Card> cards;
+    private ArrayList<Card> cards;
     /** Constructor initializes this deck object
      *  with a full deck of 52 cards with no duplicates
      *
@@ -24,7 +24,6 @@ public class Deck implements Serializable,Iterable<Card> {
                 cards.add(acard);
             }
         }
-        this.cards = cards;
     }
 
     /** Method used to shuffle the
@@ -91,12 +90,13 @@ public class Deck implements Serializable,Iterable<Card> {
         return text.toString();
     }
 
-    /**
+    /** private inner class used to iterate
+     * through deck object first cards in
+     * odd positions and then even ones
      *
      */
     private class OddEvenIterator implements Iterator<Card> {
         private int index = 0;
-        private boolean flag = false;
 
         public OddEvenIterator() {
         }
@@ -112,7 +112,7 @@ public class Deck implements Serializable,Iterable<Card> {
             return (cards.size() != index);
         }
 
-        /**
+        /** Next gives first odd then even
          *
          * @return
          */
@@ -131,15 +131,15 @@ public class Deck implements Serializable,Iterable<Card> {
             // to get evens
             if(cards.size() == index) {
                 index = 1;
-                flag = true;
             }
             return acard;
         }
     }
 
-    /**
+    /** Creates and returns a default iterator
+     *  iterating over deck in order from 0 - last
      *
-     * @return
+     * @return default iterator
      */
     @Override
     public Iterator<Card> iterator() {
@@ -163,9 +163,22 @@ public class Deck implements Serializable,Iterable<Card> {
         };
         return deflt;
     }
+
+    /** Method simply returns an
+     *  oddeven iterator
+     *
+     * @return iterator OddevenIterator
+     */
     public Iterator<Card> oddeven() {
         return new OddEvenIterator();
     }
+
+    /** Method overriden by the SDK automatically
+     *  defines how the object will be serialized
+     *
+     * @param out           - Object output stream
+     * @throws IOException  - file output issues
+     */
     private void writeObject(ObjectOutputStream out) throws IOException{
         Iterator<Card> it = oddeven();
         ArrayList<Card> saved = new ArrayList<>();

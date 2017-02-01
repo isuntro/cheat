@@ -18,6 +18,7 @@ public class Hand implements Serializable,Iterable<Card> {
     */
     private int[] histogram = new int[17];
     private int hValue;
+    private ArrayList<Card> order;
 
     /**
      * Default constructor
@@ -215,6 +216,8 @@ public class Hand implements Serializable,Iterable<Card> {
      * the overridden compareTo method in card class
      */
     public void sortAscending() {
+        this.order = new ArrayList();
+        this.order.addAll(this.cards);
         Collections.sort(this.cards);
     }
 
@@ -225,6 +228,8 @@ public class Hand implements Serializable,Iterable<Card> {
      * the comparator CompareDescending class
      */
     public void sortDescending() {
+        this.order = new ArrayList();
+        this.order.addAll(this.cards);
         Card.CompareDescending descending = new Card.CompareDescending();
         this.cards.sort(descending);
     }
@@ -298,7 +303,7 @@ public class Hand implements Serializable,Iterable<Card> {
     }
 
     /**
-     * MAYBE REDO WITHOUT SORTING IF TIME
+     *
      * Method checks if this hand object
      * has a straight ie. all the cards present
      * are in order eg. TWO,THREE,FOUR,FIVE,SIX
@@ -320,24 +325,34 @@ public class Hand implements Serializable,Iterable<Card> {
         return true;
     }
 
-    /**
-     * TO DO DEFAULT ITERATOR THAT TRANSVERSES LIST IN ORDER THEY WHERE ADDED
+    /** Default iterator will return cards
+     *  in the order that they were added
      *
-     * @return
+     * @return iterator
      */
     @Override
     public Iterator<Card> iterator() {
-        return null;
+        return new Iterator<Card>() {
+            private int index=0;
+            @Override
+            public boolean hasNext() {
+                return (index != order.size());
+            }
+            @Override
+            public Card next() {
+                return order.get(index++);
+            }
+        };
     }
 
     public static void main(String[] args) {
         Hand testHand;
         Card[] cards = new Card[5];
-        cards[0] = (new Card(Card.Rank.KING, Card.Suit.CLUB));
+        cards[0] = (new Card(Card.Rank.THREE, Card.Suit.DIAMOND));
         cards[1] = (new Card(Card.Rank.TWO, Card.Suit.DIAMOND));
-        cards[2] = (new Card(Card.Rank.ACE, Card.Suit.HEART));
-        cards[3] = (new Card(Card.Rank.QUEEN, Card.Suit.HEART));
-        cards[4] = (new Card(Card.Rank.TWO, Card.Suit.SPADE));
+        cards[2] = (new Card(Card.Rank.FOUR, Card.Suit.DIAMOND));
+        cards[3] = (new Card(Card.Rank.FIVE, Card.Suit.DIAMOND));
+        cards[4] = (new Card(Card.Rank.TWO, Card.Suit.DIAMOND));
         testHand = new Hand(cards);
         Card.Rank testrank = testHand.cards.get(4).getRank();
         Card.Suit testsuit = testHand.cards.get(3).getSuit();
@@ -358,6 +373,8 @@ public class Hand implements Serializable,Iterable<Card> {
         test.add(cards[0]);
         testHand.remove(test);
         System.out.println(testHand.getHistogram());
+        System.out.println("Testing isStraight :" + testHand.isStraight());
+        System.out.println("Testing isStraight :" + testHand.isFlush());
 
 
 
