@@ -2,6 +2,9 @@ package question2;
 
 import question1.Card;
 import question1.Hand;
+
+import java.nio.charset.MalformedInputException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -27,6 +30,8 @@ public class HumanStrategy implements Strategy {
                 "cards to play you will have to cheat " +
                 "(Type yes or no)");
         cheat = yesno(h,b);
+        // if not cards of bid rank or big next rank
+        // have to cheat
         if ( h.countRank(b.getRank()) == 0
                 && h.countRank(b.getRank().getNext()) == 0){
             cheat = true;
@@ -45,60 +50,66 @@ public class HumanStrategy implements Strategy {
      */
     @Override
     public Bid chooseBid(Bid b, Hand h, boolean cheat) {
-        int choice = 0;
+        int choice = -2;
         int chcount = 0;
         Bid playerBid = new Bid();
         Hand playing = new Hand();
         do {
             System.out.println("Your hand is : \n"+h);
             System.out.println("Type 1 - " + h.getCards().size() + " to chose a card");
-            choice = scan.nextInt();
-
-
+            System.out.println("Type -1 if you are done");
+            do {
+                if(scan.hasNextInt())
+                choice = scan.nextInt();
+                else
+                    scan.nextLine();
+            }
+            while(choice == -2);
             /*  Choice is valid only if its a positive number
                 less than number of cards in hand
                 and rank is either the same with
                 last players bid or next rank
                 player also is not allowed to play more than 4 cards
              */
-            if (choice > 0 && choice < h.getCards().size() && chcount < 4) {
+            if (choice > 0 && choice < h.getCards().size()+1 && chcount < 4) {
 
                 //If not cheating rank is either the same rank with
                 //last players bid or next rank
-                if (!cheat && (h.getCards().get(choice).getRank() == b.getRank()
-                        || h.getCards().get(choice).getRank() == b.getRank().getNext())) {
+                if (!cheat && ((h.getCards().get(choice-1).getRank() == b.getRank()
+                        || h.getCards().get(choice-1).getRank() == b.getRank().getNext()))) {
                     Card acard = h.remove(choice - 1);
                     playing.add(acard);
                     chcount++;
                     // else choose whatever cards(cheating)
-                } else {
+                } else if(cheat) {
                     Card acard = h.remove(choice - 1);
                     playing.add(acard);
                     chcount++;
                 }
-
-                System.out.println("If you're done picking cards type -1 ");
-                if (playing.getCards().get(0).getRank() == b.getRank().getNext())
+                if (playing.size() !=0 &&
+                        playing.getCards().get(0).getRank() == b.getRank().getNext())
                     playerBid.setRank(b.getRank().getNext());
                 else playerBid.setRank(b.getRank());
             }
         }
-        while (choice != -1 && chcount < 4 && h.getCards().size() != 0);
+        while (choice != -1 || playing.getCards().size() == 0);
         playerBid.setHand(playing);
         if(cheat) {
             System.out.println("You have chosen your play, now " +
                     "chose what rank u will state( 1 for last bids rank" +
                     ", 2 for next bids rank)");
             do {
-                choice = scan.nextInt();
+                if(scan.hasNextInt())
+                    choice = scan.nextInt();
+                else
+                    scan.nextLine();
                 if (choice == 1) {
                     playerBid.setRank(b.getRank());
                 } else if (choice == 2) {
                     playerBid.setRank((b.getRank().getNext()));
                 }
-                System.out.println(" If you're done picking the rank type -1");
             }
-            while (choice != -1);
+            while (choice !=1 && choice != 2);
         }
         return playerBid;
 
@@ -111,6 +122,10 @@ public class HumanStrategy implements Strategy {
      */
     @Override
     public boolean callCheat(Hand h, Bid b) {
+        // return false if game restarted
+        if(b.getCount() == 0){
+            return false;
+        }
         System.out.println("Your current hand is : \n" + h);
         System.out.println("Last players bid is : \n" + b);
         System.out.println("Would you like to call cheat ? (Type yes or no)");

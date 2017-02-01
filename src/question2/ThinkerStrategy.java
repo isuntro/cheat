@@ -40,12 +40,12 @@ public class ThinkerStrategy implements Strategy {
                     chance = rad.nextInt(index);
                     Card acard = h.getCards().get((int)chance);
                     chance = Math.random();
-                    if (acard.getRank().ordinal() >= 7 && chance > 0.5
+                    if (acard.getRank().ordinal() >= 8 && chance > 0.5
                             && acard.getRank() != b.getRank()
                             && acard.getRank() != b.getRank().getNext()) {
                         handBid.add(acard);
                     }
-                    else if(acard.getRank().ordinal() < 7 && chance < 0.2
+                    else if(acard.getRank().ordinal() < 8 && chance < 0.2
                             && acard.getRank() != b.getRank()
                             && acard.getRank() != b.getRank().getNext()){
                         handBid.add(acard);
@@ -65,7 +65,6 @@ public class ThinkerStrategy implements Strategy {
             System.out.println("CHEATING !!!!!!!");
             return new Bid (handBid, rankBid);
         }
-        //          PROBLEM HERE | CHANGE
         rankBid = b.getRank();
 
         if (h.countRank(b.getRank()) == 0) {
@@ -112,7 +111,6 @@ public class ThinkerStrategy implements Strategy {
         else if(nrRank == 2){
             p = 0.15;
         }else p = 0.1;
-        //
         if ( chance < 0.05){
             return false;
         }

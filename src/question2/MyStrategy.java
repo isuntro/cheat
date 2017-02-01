@@ -23,6 +23,7 @@ public class MyStrategy implements Strategy {
     @Override
     public Bid chooseBid(Bid b, Hand h, boolean cheat) {
 
+
         return null;
     }
 

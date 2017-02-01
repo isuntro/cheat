@@ -20,9 +20,9 @@ public class BasicCheat implements CardGame{
         players=new Player[nosPlayers];
         for(int i=0;i<nosPlayers;i++)
                 players[i]=(new BasicPlayer(new ThinkerStrategy(),this));
-        players[1] = new BasicPlayer(new BasicStrategy(),this);
-        players[2] = new BasicPlayer(new BasicStrategy(),this);
-        players[3] = new BasicPlayer(new BasicStrategy(),this);
+        players[0] = new BasicPlayer(StrategyFactory.getStrategy("human"),this);
+        players[2] = new BasicPlayer(StrategyFactory.getStrategy("thinker"),this);
+        players[3] = new BasicPlayer(StrategyFactory.getStrategy("thinker"),this);
         currentBid=new Bid();
         currentBid.setRank(Card.Rank.TWO);
         currentPlayer=0;
@@ -40,6 +40,7 @@ public class BasicCheat implements CardGame{
         discards.add(currentBid.getHand());
         //Offer all other players the chance to call cheat
         boolean cheat=false;
+        ArrayList pList = new ArrayList();
 
         for(int i=0;i<players.length && !cheat;i++){
             if(i!=currentPlayer){
